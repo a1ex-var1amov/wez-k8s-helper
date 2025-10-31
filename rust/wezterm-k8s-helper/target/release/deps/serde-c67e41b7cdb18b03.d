@@ -1,0 +1,14 @@
+/Users/a13x22/workdir/wezterm-k8s-power/rust/wezterm-k8s-helper/target/release/deps/libserde-c67e41b7cdb18b03.rmeta: /Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /Users/a13x22/workdir/wezterm-k8s-power/rust/wezterm-k8s-helper/target/release/build/serde-f8264e08b160271a/out/private.rs
+
+/Users/a13x22/workdir/wezterm-k8s-power/rust/wezterm-k8s-helper/target/release/deps/libserde-c67e41b7cdb18b03.rlib: /Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /Users/a13x22/workdir/wezterm-k8s-power/rust/wezterm-k8s-helper/target/release/build/serde-f8264e08b160271a/out/private.rs
+
+/Users/a13x22/workdir/wezterm-k8s-power/rust/wezterm-k8s-helper/target/release/deps/serde-c67e41b7cdb18b03.d: /Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /Users/a13x22/workdir/wezterm-k8s-power/rust/wezterm-k8s-helper/target/release/build/serde-f8264e08b160271a/out/private.rs
+
+/Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs:
+/Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs:
+/Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs:
+/Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs:
+/Users/a13x22/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs:
+/Users/a13x22/workdir/wezterm-k8s-power/rust/wezterm-k8s-helper/target/release/build/serde-f8264e08b160271a/out/private.rs:
+
+# env-dep:OUT_DIR=/Users/a13x22/workdir/wezterm-k8s-power/rust/wezterm-k8s-helper/target/release/build/serde-f8264e08b160271a/out
