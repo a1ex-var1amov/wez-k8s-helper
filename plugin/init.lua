@@ -171,7 +171,7 @@ local function choose_context_and_spawn(window, pane)
         if #namespaces == 0 then
           local kubeconfig = ensure_kubeconfig_for(id)
           win:perform_action(
-            wezterm.action.SpawnCommand{
+            wezterm.action.SpawnCommandInNewTab{
               set_environment_variables = {
                 KUBECONFIG = kubeconfig,
                 WEZTERM_K8S_CONTEXT = id,
@@ -204,7 +204,7 @@ local function choose_context_and_spawn(window, pane)
               end
               local kubeconfig = ensure_kubeconfig_for(id, selected_ns)
               w2:perform_action(
-                wezterm.action.SpawnCommand{
+                wezterm.action.SpawnCommandInNewTab{
                   set_environment_variables = {
                     KUBECONFIG = kubeconfig,
                     WEZTERM_K8S_CONTEXT = id,
