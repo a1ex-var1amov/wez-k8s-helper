@@ -79,6 +79,7 @@ struct NamedItem {
 fn main() -> Result<()> {
     let cli = Cli::parse();
     let paths = resolve_kubeconfig_paths(cli.kubeconfig.as_deref())?;
+    let kubeconfig_env = join_paths_for_env(&paths);
     let merged = load_merged_kubeconfig(&paths)?;
 
     match cli.command {
@@ -107,7 +108,7 @@ fn main() -> Result<()> {
             println!("{}", merged.current_context.unwrap_or_default());
         }
         Command::Namespaces { context, json } => {
-            let nss = list_namespaces_via_kubectl(&context)?;
+            let nss = list_namespaces_via_kubectl(&context, kubeconfig_env.as_deref())?;
             if json {
                 println!("{}", serde_json::to_string(&nss)?);
             } else {
@@ -223,13 +224,14 @@ fn set_context_namespace(cfg: &mut KubeConfig, context_name: &str, ns: &str) -> 
     }
 }
 
-fn list_namespaces_via_kubectl(context: &str) -> Result<Vec<String>> {
-    let output = ProcCommand::new("kubectl")
-        .args(["--context", context, "get", "ns", "-o", "json"])
-        .output()
-        .with_context(|| "failed to execute kubectl")?;
+fn list_namespaces_via_kubectl(context: &str, kubeconfig_env: Option<&str>) -> Result<Vec<String>> {
+    let mut cmd = ProcCommand::new("kubectl");
+    cmd.args(["--context", context, "get", "ns", "-o", "json"]);
+    if let Some(kc) = kubeconfig_env { cmd.env("KUBECONFIG", kc); }
+    let output = cmd.output().with_context(|| "failed to execute kubectl")?;
     if !output.status.success() {
-        return Err(anyhow!("kubectl get ns failed"));
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        return Err(anyhow!("kubectl get ns failed: {}", stderr.trim()));
     }
     let v: serde_json::Value = serde_json::from_slice(&output.stdout)?;
     let mut out = Vec::new();
@@ -242,4 +244,14 @@ fn list_namespaces_via_kubectl(context: &str) -> Result<Vec<String>> {
     }
     out.sort();
     Ok(out)
+}
+
+fn join_paths_for_env(paths: &[PathBuf]) -> Option<String> {
+    if paths.is_empty() { return None; }
+    let s = paths
+        .iter()
+        .map(|p| p.as_os_str().to_string_lossy().into_owned())
+        .collect::<Vec<_>>()
+        .join(":");
+    Some(s)
 }

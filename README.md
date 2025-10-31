@@ -52,6 +52,22 @@ config.keys = config.keys or {}
  })
 ```
 
+### Options
+You can pass options to control helper usage and debugging:
+
+```lua
+k8s_power.apply_to_config(config, {
+  -- Force a specific helper path (or set env WEZTERM_K8S_HELPER)
+  -- helper_path = '/usr/local/bin/wezterm-k8s-helper',
+
+  -- Force a specific kubectl path if needed
+  -- kubectl_path = '/opt/homebrew/bin/kubectl',
+
+  -- Show a toast with detected paths when opening the picker
+  -- debug = true,
+})
+```
+
 Note: Your WezTerm config must return a table (e.g. `return config`). Returning a function is not supported and will prevent the plugin from loading.
 
 ## Usage
@@ -103,6 +119,26 @@ wezterm-k8s-helper gen --context dev --namespace default --out /tmp/dev-kube.yam
   - `command -v wezterm-k8s-helper` prints a path (if you installed it)
   - Try launching WezTerm from a shell to inherit your PATH
 - You can safely delete generated files under `~/.local/share/wezterm-k8s-power/`
+
+- If the selected context/namespace doesn't apply in the new tab:
+  Your shell rc may be overriding `KUBECONFIG` (e.g., `export KUBECONFIG=~/.kube/config`). Change it to only set a default when not already set.
+
+  bash/zsh (`~/.bashrc` or `~/.zshrc`):
+  ```bash
+  export KUBECONFIG=${KUBECONFIG:-$HOME/.kube/config}
+  ```
+
+  fish (`~/.config/fish/config.fish`):
+  ```fish
+  set -x KUBECONFIG $KUBECONFIG; or set -x KUBECONFIG $HOME/.kube/config
+  ```
+
+  Then restart WezTerm and verify inside the spawned tab:
+  ```bash
+  echo "$KUBECONFIG" "$WEZTERM_K8S_CONTEXT" "$WEZTERM_K8S_NAMESPACE"
+  kubectl config current-context
+  kubectl config view --minify -o jsonpath='{.contexts[0].context.namespace}'; echo
+  ```
 
 ## License
 MIT

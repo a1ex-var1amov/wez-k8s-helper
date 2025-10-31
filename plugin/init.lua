@@ -2,6 +2,13 @@ local wezterm = require 'wezterm'
 
 local M = {}
 
+-- runtime options (set via apply_to_config)
+local runtime = {
+  helper_path = os.getenv('WEZTERM_K8S_HELPER'),
+  kubectl_path = nil,
+  debug = false,
+}
+
 -- Try to locate the optional Rust helper on PATH.
 local function find_in_path(binary, extra_candidates)
   local f = io.popen('command -v ' .. binary .. ' 2>/dev/null')
@@ -18,6 +25,7 @@ local function find_in_path(binary, extra_candidates)
 end
 
 local function find_helper()
+  if runtime.helper_path then return runtime.helper_path end
   return find_in_path('wezterm-k8s-helper', {
     '/usr/local/bin/wezterm-k8s-helper',
     '/opt/homebrew/bin/wezterm-k8s-helper',
@@ -25,6 +33,7 @@ local function find_helper()
 end
 
 local function find_kubectl()
+  if runtime.kubectl_path then return runtime.kubectl_path end
   return find_in_path('kubectl', {
     '/opt/homebrew/bin/kubectl',
     '/usr/local/bin/kubectl',
@@ -139,6 +148,15 @@ local function choose_context_and_spawn(window, pane)
     table.insert(choices, { id = ctx, label = '⎈ ' .. ctx })
   end
 
+  if runtime.debug then
+    window:toast_notification(
+      'wezterm-k8s-power',
+      'helper=' .. tostring(find_helper() or 'nil') .. ' kubectl=' .. tostring(find_kubectl() or 'nil'),
+      nil,
+      3000
+    )
+  end
+
   window:perform_action(
     wezterm.action.InputSelector{
       title = 'Select Kubernetes context',
@@ -223,6 +241,17 @@ function M.apply_to_config(config, opts)
   local enable_key = opts.enable_default_keybinding
   if enable_key == nil then
     enable_key = true
+  end
+
+  -- runtime options
+  if type(opts.helper_path) == 'string' and #opts.helper_path > 0 then
+    runtime.helper_path = opts.helper_path
+  end
+  if type(opts.kubectl_path) == 'string' and #opts.kubectl_path > 0 then
+    runtime.kubectl_path = opts.kubectl_path
+  end
+  if type(opts.debug) == 'boolean' then
+    runtime.debug = opts.debug
   end
 
   if enable_key then
